@@ -1,0 +1,17 @@
+{
+  "name": "visivi-js",
+  "productName": "VisiviJS",
+  "version": "1.4.0",
+  "description": "Visivi is a simple interface for visually impaired",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "Sergey Kuroedov",
+    "email": "skuroedov@email.cz",
+    "url": "https://github.com/skuroedov"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "dependencies": {}
+}
