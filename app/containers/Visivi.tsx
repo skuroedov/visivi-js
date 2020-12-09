@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import styles from './Visivi.css';
 import ConfigManager from '../providers/ConfigManager';
 
@@ -6,23 +6,29 @@ type Props = {
     children: ReactNode;
 };
 
-export default class Visivi extends React.Component {
-    readonly #props: Props;
+interface MainState {
+    content: ReactNode;
+}
 
-    style: CSSProperties = {
-        fontSize: '2em',
-    };
+export default class Visivi extends React.Component<{}, MainState> {
+    private static _instance: Visivi;
 
     constructor(props: Props) {
         super(props);
-        this.#props = props;
+        this.state = {
+            content: props.children,
+        };
+        Visivi._instance = this;
     }
 
-    render() {
-        const { children } = this.#props;
+    render(): JSX.Element {
         const conf = new ConfigManager();
         const theme = styles[conf.getConfig.theme];
         const classes = `${styles.visiviContainer} ${theme}`;
-        return <div className={classes}>{children}</div>;
+        return <div className={classes}>{this.state.content}</div>;
+    }
+
+    static get instance(): Visivi {
+        return this._instance;
     }
 }
