@@ -1,0 +1,9 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    margin-right: auto;
+    margin-left: auto;
+}
