@@ -6,36 +6,38 @@ const os = require('os');
 const path = `${os.homedir()}/.config/visivi.conf`;
 
 export default class ConfigManager {
-    private _config!: Config;
+    private _config: Config;
 
     constructor() {
         let fd;
         try {
             fd = this.readConfig();
         } catch (e) {
-            this.generateConfig();
+            fs.copyFileSync('./resources/config', path);
             fd = this.readConfig();
         }
         this._config = JSON.parse(fd);
     }
 
-    generateConfig = () => {
-        fs.copyFileSync('./resources/config', path);
-    };
-
     private readConfig(): string {
         return fs.readFileSync(path);
     }
 
-    static updateConfig = (value: Config) => {
-        fs.writeFile(path, JSON.stringify(value));
-    };
+    private updateConfig(): void {
+        fs.writeFile(path, JSON.stringify(this._config), () => {
+            console.log("lolec")
+        });
+    }
 
-    get getConfig(): Config {
+    get config(): Config {
         return this._config;
     }
 
-    set getConfig(value: Config) {
-        this._config = value;
+    public set(config: Config) {
+        for (let key in config) {
+            // @ts-ignore
+            this._config[key] = config[key];
+        }
+        this.updateConfig();
     }
 }
