@@ -5,6 +5,7 @@ import './app.global.css';
 import Visivi from './components/Visivi';
 import Menu from './components/menu/Menu';
 import BasicItem from './components/menu/items/BasicItem';
+import {Settings} from "./components/settings/Settings";
 
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <Menu>
                     <BasicItem opens={<div>file manager</div>}>Průzkumník souborů</BasicItem>
                     <BasicItem opens={<div>notes</div>}>Poznámky</BasicItem>
-                    <BasicItem opens={<div>settings</div>}>Nastavení</BasicItem>
+                    <BasicItem opens={<Settings />}>Nastavení</BasicItem>
                 </Menu>
             </Visivi>
         </AppContainer>,

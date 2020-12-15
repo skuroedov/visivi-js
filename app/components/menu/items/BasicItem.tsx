@@ -6,7 +6,7 @@ interface Props extends ItemProps{
     opens: ReactNode;
 }
 
-export default class BasicItem extends MenuItem<Props> {
+export default class BasicItem extends MenuItem<Props, {}> {
     onClick(): void {
         Visivi.instance.setState({content: this.props.opens});
     }

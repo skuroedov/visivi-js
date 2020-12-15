@@ -26,13 +26,10 @@ export default class Visivi extends React.Component<{}, MainState> {
             content: props.children,
             theme: Visivi.configManager.config.theme ?? THEME_BLACK_WHITE.value,
         };
-        Visivi._instance = this;
     }
 
     render(): JSX.Element {
-        const conf = new ConfigManager();
-        const theme = styles[conf.getConfig.theme];
-        const classes = `${styles.visiviContainer} ${theme}`;
+        const classes = `${styles.visiviContainer} ${styles[this.state.theme]}`;
         return <div className={classes}>{this.state.content}</div>;
     }
 
@@ -42,5 +39,14 @@ export default class Visivi extends React.Component<{}, MainState> {
 
     static get configManager(): ConfigManager {
         return this._configManager;
+    }
+
+    static set theme(value: string) {
+        Visivi.configManager.set({theme: value});
+        Visivi.instance.setState({theme: value});
+    }
+
+    static resetTheme(): void {
+        Visivi.instance.setState({theme: THEME_BLACK_WHITE.name});
     }
 }

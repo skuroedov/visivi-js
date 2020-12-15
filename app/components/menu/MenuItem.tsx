@@ -5,7 +5,7 @@ export interface ItemProps {
     children: string;
 }
 
-export abstract class MenuItem<P> extends React.Component<P> {
+export abstract class MenuItem<P, S> extends React.Component<P, S> {
     styles = stylesheet;
     classes: string = this.styles.item;
 
