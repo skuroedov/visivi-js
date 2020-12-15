@@ -1,9 +1,48 @@
 .menu {
-    display: flex;
-    flex-direction: column;
+    text-align: center;
 }
 
 .item {
-    margin-right: auto;
-    margin-left: auto;
+    padding: 0.5em;
+}
+
+.radio {
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-gap: 0.5em;
+}
+
+.radio:focus-within .radioLabel, .radio input:checked + .radioControl::before {
+    opacity: 1;
+}
+
+.radioLabel {
+    line-height: 1;
+}
+
+.radioInput {
+    display: flex;
+}
+
+.radioInput input {
+    width: 0;
+    height: 0;
+}
+
+.radio .radioControl {
+    display: grid;
+    place-items: center;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 0.1em solid currentColor;
+}
+
+.radioControl::before {
+    content: "";
+    width: 0.5em;
+    height: 0.5em;
+    box-shadow: inset 0.5em 0.5em currentColor;
+    border-radius: 50%;
+    opacity: 0;
 }
