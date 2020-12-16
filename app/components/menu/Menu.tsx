@@ -4,7 +4,7 @@ import VisiviContainer from '../VisiviContainer';
 import styles from './stylesheet.css';
 
 export type MenuProps = {
-    children: ReactNode;
+    children?: ReactNode
 }
 
 export default class Menu extends VisiviContainer<MenuProps> {

@@ -5,7 +5,11 @@ export interface ItemProps {
     children: string;
 }
 
-export abstract class MenuItem<P, S> extends React.Component<P, S> {
+export interface SMenuItem {
+    focused: boolean;
+}
+
+export abstract class MenuItem<ItemProps, S> extends React.Component<ItemProps> {
     styles = stylesheet;
     classes: string = this.styles.item;
 
