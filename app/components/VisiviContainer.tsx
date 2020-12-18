@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default abstract class VisiviContainer<P> extends React.Component<P> {
+export default abstract class VisiviContainer<P, S = {}> extends React.Component<P, S> {
     abstract render(): JSX.Element;
 }

@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import stylesheet from './stylesheet.css';
 
-export interface ItemProps {
+export interface PMenuItem {
     children: string;
 }
 
@@ -9,7 +9,7 @@ export interface SMenuItem {
     focused: boolean;
 }
 
-export abstract class MenuItem<ItemProps, S> extends React.Component<ItemProps> {
+export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuItem = SMenuItem> extends React.Component<P, S> {
     styles = stylesheet;
     classes: string = this.styles.item;
 

@@ -5,11 +5,12 @@ import RadioItem, {PRadioItem, SRadioItem} from "../menu/items/RadioItem";
 import Visivi from "../Visivi";
 
 class ThemeItem extends RadioItem {
-    constructor(props: PRadioItem, state?: SRadioItem) {
+    constructor(props: PRadioItem, state: SRadioItem) {
         super(props, state);
-        this.state = {
-            checked: Visivi.configManager.config.theme == this.props.value,
-        }
+
+        let newState: SRadioItem = state;
+        newState.checked = Visivi.configManager.config.theme == this.props.value;
+        this.state = newState;
     }
 
     onChange() {

@@ -1,7 +1,7 @@
-import {ItemProps, MenuItem, SMenuItem} from "../MenuItem";
+import {MenuItem, PMenuItem, SMenuItem} from "../MenuItem";
 import React from "react";
 
-export interface PRadioItem extends ItemProps {
+export interface PRadioItem extends PMenuItem {
     value: string;
 }
 
@@ -22,7 +22,6 @@ export default class RadioItem extends MenuItem<PRadioItem, SRadioItem> {
 
     //TODO: name prop
     render(): JSX.Element {
-        console.log(this.state)
         return this.renderDefault(
             <label className={this.styles.radio}>
                 <span className={this.styles.radioInput}>
