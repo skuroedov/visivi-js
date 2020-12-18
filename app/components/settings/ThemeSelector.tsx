@@ -33,8 +33,6 @@ export class ThemeSelector extends Menu {
     }
 
     render(): JSX.Element {
-        return <Menu>
-            {this.list()}
-        </Menu>
+        return <Menu children={this.list()} />
     }
 }
