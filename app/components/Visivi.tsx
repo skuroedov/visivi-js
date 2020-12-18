@@ -15,12 +15,18 @@ interface MainState {
 export default class Visivi extends React.Component<{}, MainState> {
     private static _instance: Visivi;
     private static _configManager: ConfigManager;
+    // @ts-ignore
+    private static _mespeak;
 
     constructor(props: Props) {
         super(props);
 
         Visivi._instance = this;
         Visivi._configManager = new ConfigManager();
+        Visivi._mespeak = require("mespeak");
+
+        Visivi._mespeak.loadConfig(require("mespeak/src/mespeak_config.json"));
+        Visivi._mespeak.loadVoice(require("mespeak/voices/cs.json"));
 
         this.state = {
             content: props.children,
@@ -39,6 +45,10 @@ export default class Visivi extends React.Component<{}, MainState> {
 
     static get configManager(): ConfigManager {
         return this._configManager;
+    }
+
+    static get TTS() {
+        return Visivi._mespeak
     }
 
     static set theme(value: string) {
