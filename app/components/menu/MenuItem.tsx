@@ -18,6 +18,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     abstract render(): JSX.Element;
 
     onFocus() {
+        Visivi.TTS.stop();
         Visivi.TTS.speak(this.props.children);
     }
 
