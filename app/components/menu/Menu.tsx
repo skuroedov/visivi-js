@@ -1,25 +1,27 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
+import VisiviContainer, {PVisiviContainer, SVisiviContainer} from '../VisiviContainer';
+import stylesheet from './stylesheet.css';
 
-import VisiviContainer from '../VisiviContainer';
-import styles from './stylesheet.css';
+export default class Menu extends VisiviContainer {
+    styles = stylesheet;
+    items: React.ReactNode | React.ReactElement[] | undefined = []
 
-export interface PMenu {
-    children: ReactNode,
-}
+    constructor(props: PVisiviContainer, state: SVisiviContainer) {
+        super(props, state);
 
-export interface SMenu {
-    focused: number,
-}
+        this.items = this.props.children;
+    }
 
-export default class Menu extends VisiviContainer<PMenu, SMenu> {
-    constructor(props: PMenu) {
-        super(props);
-        this.state = {
-            focused: 0,
-        }
+    renderItems(items = this.items) {
+        return React.Children.map(items, (child, index) => {
+            // @ts-ignore
+            return React.cloneElement(child, {id: index, focused: (this.state.focused == index)});
+        });
     }
 
     render(): JSX.Element {
-        return <div className={styles.menu}>{this.props.children}</div>;
+        return <div className={this.styles.menu}>
+            {this.renderItems()}
+        </div>;
     }
 }

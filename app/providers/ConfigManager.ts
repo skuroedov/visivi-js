@@ -24,9 +24,7 @@ export default class ConfigManager {
     }
 
     private updateConfig(): void {
-        fs.writeFile(path, JSON.stringify(this._config), () => {
-            console.log("lolec")
-        });
+        fs.writeFile(path, JSON.stringify(this._config), null);
     }
 
     get config(): Config {

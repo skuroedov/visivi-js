@@ -7,11 +7,9 @@ interface Props extends PMenuItem {
 }
 
 export default class BasicItem extends MenuItem<Props> {
-    onClick(): void {
+    onEnter(): void {
+        Visivi.eventEmitter.emit("unmount");
+        // @ts-ignore
         Visivi.instance.setState({content: this.props.opens});
-    }
-
-    render(): JSX.Element {
-        return this.renderDefault();
     }
 }

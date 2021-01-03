@@ -1,28 +1,74 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import stylesheet from './stylesheet.css';
 import Visivi from "../Visivi";
 
 export interface PMenuItem {
-    children: string;
+    children: any;
+    id?: number;
+    focused?: boolean;
 }
 
 export interface SMenuItem {
-    focused: boolean;
+    focused?: boolean;
 }
 
 export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuItem = SMenuItem> extends React.Component<P, S> {
+    protected _mounted: boolean = false;
+
     styles = stylesheet;
-    classes: string = this.styles.item;
+    defaultClasses: string = this.styles.item;
+    classes: string = this.defaultClasses;
 
-    abstract onClick(): void;
-    abstract render(): JSX.Element;
+    constructor(props: P) {
+        super(props);
 
-    onFocus() {
-        Visivi.TTS.stop();
-        Visivi.TTS.speak(this.props.children);
+        Visivi.eventEmitter.addListener("enter", () => {
+            if(this.state.focused && this._mounted) {
+                this.onEnter();
+            }
+        });
+
+        Visivi.eventEmitter.addListener("unmount", () => {
+            this._mounted = false;
+        })
     }
 
-    renderDefault(inside?: ReactNode): JSX.Element {
-        return <div className={this.classes} onClick={() => this.onClick()} onFocus={() => this.onFocus()} tabIndex={0}>{inside ?? this.props.children}</div>
+    focus(): void {
+        this.classes += " " + this.styles.focused;
+
+        Visivi.TTS.stop();
+        Visivi.TTS.speak(this.props.children);
+
+        this.onFocus();
+    }
+
+    unFocus(): void {
+        this.classes = this.defaultClasses;
+    }
+
+    onFocus(): void {}
+    onEnter(): void {}
+
+    render(): JSX.Element {
+        return <div className={this.classes}>{this.props.children}</div>;
+    }
+
+    componentDidMount() {
+        this.setState({focused: this.props.focused});
+        this._mounted = true;
+    }
+
+    shouldComponentUpdate(nextProps: P, nextState: S): boolean {
+        if(nextProps.focused != this.props.focused) {
+            this.setState({focused: nextProps.focused});
+        }
+
+        nextState.focused ? this.focus() : this.unFocus();
+
+        return true;
+    }
+
+    componentWillUnmount() {
+        this._mounted = false;
     }
 }

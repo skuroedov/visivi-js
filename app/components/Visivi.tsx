@@ -1,14 +1,16 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import styles from './Visivi.css';
 import ConfigManager from '../providers/ConfigManager';
 import {THEME_BLACK_WHITE} from "../constants/themes";
+import VisiviContainer from "./VisiviContainer";
+import {EventEmitter} from "events";
 
 type Props = {
-    children: ReactNode;
+    children: VisiviContainer;
 };
 
 interface MainState {
-    content: ReactNode;
+    content: VisiviContainer;
     theme: string;
 }
 
@@ -17,6 +19,7 @@ export default class Visivi extends React.Component<{}, MainState> {
     private static _configManager: ConfigManager;
     // @ts-ignore
     private static _mespeak;
+    private static _eventEmitter: EventEmitter;
 
     constructor(props: Props) {
         super(props);
@@ -24,6 +27,7 @@ export default class Visivi extends React.Component<{}, MainState> {
         Visivi._instance = this;
         Visivi._configManager = new ConfigManager();
         Visivi._mespeak = require("mespeak");
+        Visivi._eventEmitter = new EventEmitter();
 
         Visivi._mespeak.loadConfig(require("mespeak/src/mespeak_config.json"));
         Visivi._mespeak.loadVoice(require("mespeak/voices/cs.json"));
@@ -49,6 +53,10 @@ export default class Visivi extends React.Component<{}, MainState> {
 
     static get TTS() {
         return Visivi._mespeak
+    }
+
+    static get eventEmitter() {
+        return Visivi._eventEmitter;
     }
 
     static set theme(value: string) {
