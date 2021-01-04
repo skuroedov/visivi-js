@@ -22,10 +22,12 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
     keyListener(e: KeyboardEvent) {
         switch(e.key) {
             case "ArrowUp":
-                this.setState({focused: this.state.focused-1});
+                if(this.state.focused - 1 >= 0)
+                    this.setState({focused: this.state.focused-1});
                 break;
             case "ArrowDown":
-                this.setState({focused: this.state.focused+1});
+                if(this.state.focused + 1 < React.Children.count(this.props.children))
+                    this.setState({focused: this.state.focused+1});
                 break;
             case "Enter":
                 Visivi.eventEmitter.emit("enter")
