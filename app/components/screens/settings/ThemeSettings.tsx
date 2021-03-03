@@ -11,7 +11,7 @@ export class ThemeItem extends RadioItem {
     }
 }
 
-export class ThemeSelector extends Menu {
+export class ThemeSettings extends Menu {
     constructor(props: PVisiviComponent) {
         super(props);
         let items: ReactElement[] = [];
