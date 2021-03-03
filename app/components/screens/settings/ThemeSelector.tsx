@@ -7,7 +7,7 @@ import {PVisiviComponent} from "../../VisiviComponent";
 
 export class ThemeItem extends RadioItem {
     onChange(): void {
-        Visivi.theme = this.props.value;
+        Visivi.config.set({theme: this.props.value.toString()});
     }
 }
 
@@ -19,7 +19,7 @@ export class ThemeSelector extends Menu {
         for(let i = 0; i < THEMES.length; ++i) {
             theme = THEMES[i];
 
-            if(Visivi.configManager.config.theme == theme.value) {
+            if(Visivi.config.get("theme") == theme.value) {
                 this.state = {
                     focused: i,
                 };

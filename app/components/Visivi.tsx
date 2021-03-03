@@ -4,14 +4,13 @@ import ConfigManager from '../providers/ConfigManager';
 import {THEME_BLACK_WHITE} from "../constants/themes";
 import {EventEmitter} from "events";
 import VisiviRouter from "./VisiviRouter";
+import Config from "../entities/Config";
+import VisiviConfig from "../providers/VisiviConfig";
 
-interface SVisivi {
-    theme: string;
-}
-
-export default class Visivi extends React.Component<{}, SVisivi> {
+export default class Visivi extends React.Component<{}, Config> {
     private static _instance: Visivi;
     private static _configManager: ConfigManager;
+    private static _config: VisiviConfig;
     // @ts-ignore
     private static _mespeak;
     private static _eventEmitter: EventEmitter;
@@ -21,6 +20,7 @@ export default class Visivi extends React.Component<{}, SVisivi> {
 
         Visivi._instance = this;
         Visivi._configManager = new ConfigManager();
+        Visivi._config = new VisiviConfig(Visivi.configManager);
         Visivi._mespeak = require("mespeak");
         Visivi._eventEmitter = new EventEmitter();
 
@@ -33,6 +33,7 @@ export default class Visivi extends React.Component<{}, SVisivi> {
     }
 
     render(): JSX.Element {
+        // @ts-ignore
         const classes = `${styles.visiviContainer} ${styles[this.state.theme]}`;
         return <div className={classes}>
             <VisiviRouter />
@@ -47,6 +48,10 @@ export default class Visivi extends React.Component<{}, SVisivi> {
         return this._configManager;
     }
 
+    static get config(): VisiviConfig {
+        return this._config;
+    }
+
     static get TTS() {
         return Visivi._mespeak
     }
@@ -55,14 +60,4 @@ export default class Visivi extends React.Component<{}, SVisivi> {
         return Visivi._eventEmitter;
     }
 
-    static set theme(value: string) {
-        if(Visivi._instance.state.theme != value) {
-            Visivi.configManager.set({theme: value});
-            Visivi.instance.setState({theme: value});
-        }
-    }
-
-    static resetTheme(): void {
-        Visivi.instance.setState({theme: THEME_BLACK_WHITE.name});
-    }
 }
