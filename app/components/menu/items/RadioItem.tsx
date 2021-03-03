@@ -2,7 +2,7 @@ import {MenuItem, PMenuItem} from "../MenuItem";
 import React from "react";
 
 export interface PRadioItem extends PMenuItem {
-    value: string;
+    value: string | number;
 }
 
 export default class RadioItem extends MenuItem<PRadioItem> {

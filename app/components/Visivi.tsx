@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Visivi.css';
 import ConfigManager from '../providers/ConfigManager';
-import {THEME_BLACK_WHITE} from "../constants/themes";
 import {EventEmitter} from "events";
 import VisiviRouter from "./VisiviRouter";
 import Config from "../entities/Config";
@@ -27,15 +26,14 @@ export default class Visivi extends React.Component<{}, Config> {
         Visivi._mespeak.loadConfig(require("mespeak/src/mespeak_config.json"));
         Visivi._mespeak.loadVoice(require("mespeak/voices/cs.json"));
 
-        this.state = {
-            theme: Visivi.configManager.config.theme ?? THEME_BLACK_WHITE.value,
-        };
+        this.state = Visivi.configManager.config;
     }
 
     render(): JSX.Element {
         // @ts-ignore
         const classes = `${styles.visiviContainer} ${styles[this.state.theme]}`;
-        return <div className={classes}>
+        const style = {fontSize: `${Visivi.config.get('fontSize')}pt`};
+        return <div className={classes} style={style}>
             <VisiviRouter />
         </div>;
     }
@@ -59,5 +57,4 @@ export default class Visivi extends React.Component<{}, Config> {
     static get eventEmitter() {
         return Visivi._eventEmitter;
     }
-
 }

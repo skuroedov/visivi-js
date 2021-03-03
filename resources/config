@@ -1,3 +1,4 @@
 {
-    "theme": "black_white"
+    "theme": "black_white",
+    "fontSize": 12
 }
