@@ -1,9 +1,9 @@
 import React, {ReactElement} from "react";
-import Menu from "../menu/Menu";
-import Theme, { THEMES} from "../../constants/themes";
-import RadioItem from "../menu/items/RadioItem";
-import Visivi from "../Visivi";
-import {PVisiviContainer, SVisiviContainer} from "../VisiviContainer";
+import RadioItem from "../../menu/items/RadioItem";
+import Visivi from "../../Visivi";
+import Menu from "../../menu/Menu";
+import Theme, {THEMES} from "../../../constants/themes";
+import {PVisiviComponent} from "../../VisiviComponent";
 
 export class ThemeItem extends RadioItem {
     onChange(): void {
@@ -12,9 +12,8 @@ export class ThemeItem extends RadioItem {
 }
 
 export class ThemeSelector extends Menu {
-    constructor(props: PVisiviContainer, state: SVisiviContainer) {
-        super(props, state);
-
+    constructor(props: PVisiviComponent) {
+        super(props);
         let items: ReactElement[] = [];
         let theme: Theme;
         for(let i = 0; i < THEMES.length; ++i) {
@@ -27,7 +26,6 @@ export class ThemeSelector extends Menu {
             }
 
             items.push(React.createElement(ThemeItem, {
-                key: theme.value,
                 value: theme.value,
                 children: theme.name,
             }));
