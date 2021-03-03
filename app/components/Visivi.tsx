@@ -2,27 +2,22 @@ import React from 'react';
 import styles from './Visivi.css';
 import ConfigManager from '../providers/ConfigManager';
 import {THEME_BLACK_WHITE} from "../constants/themes";
-import VisiviContainer from "./VisiviContainer";
 import {EventEmitter} from "events";
+import VisiviRouter from "./VisiviRouter";
 
-type Props = {
-    children: VisiviContainer;
-};
-
-interface MainState {
-    content: VisiviContainer;
+interface SVisivi {
     theme: string;
 }
 
-export default class Visivi extends React.Component<{}, MainState> {
+export default class Visivi extends React.Component<{}, SVisivi> {
     private static _instance: Visivi;
     private static _configManager: ConfigManager;
     // @ts-ignore
     private static _mespeak;
     private static _eventEmitter: EventEmitter;
 
-    constructor(props: Props) {
-        super(props);
+    constructor() {
+        super({});
 
         Visivi._instance = this;
         Visivi._configManager = new ConfigManager();
@@ -33,14 +28,15 @@ export default class Visivi extends React.Component<{}, MainState> {
         Visivi._mespeak.loadVoice(require("mespeak/voices/cs.json"));
 
         this.state = {
-            content: props.children,
             theme: Visivi.configManager.config.theme ?? THEME_BLACK_WHITE.value,
         };
     }
 
     render(): JSX.Element {
         const classes = `${styles.visiviContainer} ${styles[this.state.theme]}`;
-        return <div className={classes}>{this.state.content}</div>;
+        return <div className={classes}>
+            <VisiviRouter />
+        </div>;
     }
 
     static get instance(): Visivi {
@@ -60,8 +56,10 @@ export default class Visivi extends React.Component<{}, MainState> {
     }
 
     static set theme(value: string) {
-        Visivi.configManager.set({theme: value});
-        Visivi.instance.setState({theme: value});
+        if(Visivi._instance.state.theme != value) {
+            Visivi.configManager.set({theme: value});
+            Visivi.instance.setState({theme: value});
+        }
     }
 
     static resetTheme(): void {

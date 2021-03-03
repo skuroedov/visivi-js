@@ -1,15 +1,20 @@
 import {MenuItem, PMenuItem} from '../MenuItem';
-import Visivi from '../../Visivi';
-import {ReactNode} from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import VisiviHistory from "../../../providers/VisiviHistory";
 
-interface Props extends PMenuItem {
-    opens: ReactNode;
+interface PBasicItem extends PMenuItem {
+    opens: string;
 }
 
-export default class BasicItem extends MenuItem<Props> {
+export default class BasicItem extends MenuItem<PBasicItem> {
     onEnter(): void {
-        Visivi.eventEmitter.emit("unmount");
-        // @ts-ignore
-        Visivi.instance.setState({content: this.props.opens});
+        VisiviHistory.push(this.props.opens);
+    }
+
+    render(): JSX.Element {
+        return <Link to={this.props.opens} style={{textDecoration: 'none', color: 'inherit'}}>
+            {super.render()}
+        </Link>
     }
 }
