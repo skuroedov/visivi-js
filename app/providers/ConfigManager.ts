@@ -24,7 +24,7 @@ export default class ConfigManager {
     }
 
     private updateConfig(): void {
-        fs.writeFile(path, JSON.stringify(this._config), null);
+        fs.writeFile(path, JSON.stringify(this._config), () => null);
     }
 
     get config(): Config {
