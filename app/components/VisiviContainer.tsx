@@ -24,7 +24,6 @@ export default abstract class VisiviContainer<P = PVisiviComponent, S extends SV
     }
 
     keyListener(e: KeyboardEvent) {
-        console.log([Date.now(), e])
         switch(e.key) {
             case "ArrowUp":
                 if(this.state.focused - 1 >= 0) {
