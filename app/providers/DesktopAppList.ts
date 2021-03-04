@@ -6,7 +6,8 @@ const fs = require('fs');
 const os = require('os');
 
 export default class DesktopAppList {
-    desktopFiles: DesktopFile[] = [];
+    private desktopFiles: DesktopFile[] = [];
+    private _categories: string[] = [];
 
     constructor() {
         const dirs = ["/usr/share/applications", join(os.homedir(), ".local/share/applications")];
@@ -32,7 +33,15 @@ export default class DesktopAppList {
             if (relevantLowerCase.includes(substr[0].toLowerCase())) {
                 const i = relevantLowerCase.indexOf(substr[0].toLowerCase());
                 if (substr[0] == "Categories") {
-                    desktopFile.categories = substr[1].split(";");
+                    substr[1] = substr[1].slice(0, -1);
+
+                    let categories = substr[1].split(";");
+                    desktopFile.categories = categories;
+                    categories.forEach(category => {
+                        if(!this.categories.includes(category)) {
+                            this.categories.push(category);
+                        }
+                    })
                 } else {
                     // @ts-ignore
                     desktopFile[relevant[i]] = substr[1];
@@ -45,5 +54,9 @@ export default class DesktopAppList {
 
     get get(): DesktopFile[] {
         return this.desktopFiles;
+    }
+
+    get categories(): string[] {
+        return this._categories;
     }
 }
