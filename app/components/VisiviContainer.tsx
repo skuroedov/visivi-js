@@ -7,7 +7,7 @@ export interface SVisiviContainer {
     focused: number,
 }
 
-export default abstract class VisiviContainer<P = PVisiviComponent, S extends SVisiviContainer = SVisiviContainer> extends VisiviComponent<P, S> {
+export default abstract class VisiviContainer<P extends PVisiviComponent = PVisiviComponent, S extends SVisiviContainer = SVisiviContainer> extends VisiviComponent<P, S> {
     defaultClasses = this.styles.visiviContainer;
     childCount: number;
 

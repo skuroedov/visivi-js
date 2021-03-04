@@ -3,13 +3,13 @@ import stylesheet from './stylesheet.css';
 import {PVisiviComponent} from "../VisiviComponent";
 import React from "react";
 
-export default class Menu extends VisiviContainer {
+export default class Menu<P extends PVisiviComponent = PVisiviComponent> extends VisiviContainer<P> {
     styles = stylesheet;
     defaultClasses = this.styles.menu;
 
     _items: React.ReactNode;
 
-    constructor(props: PVisiviComponent) {
+    constructor(props: P) {
         super(props);
 
         this.items = this.props.children;
