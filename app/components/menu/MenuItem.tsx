@@ -2,6 +2,7 @@ import React from 'react';
 import stylesheet from './stylesheet.css';
 import Visivi from "../Visivi";
 import VisiviComponent, {PVisiviComponent} from "../VisiviComponent";
+import VisiviTTS from "../../providers/VisiviTTS";
 
 export interface PMenuItem extends PVisiviComponent {
     focused?: boolean;
@@ -29,8 +30,8 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     focus(): void {
         this.classes = this.focussedClasses;
 
-        Visivi.TTS.stop();
-        Visivi.TTS.speak(this.props.children);
+        VisiviTTS.stop();
+        VisiviTTS.speak(String(this.props.children));
 
         Visivi.eventEmitter.removeAllListeners("enter");
         Visivi.eventEmitter.once("enter", this.onEnter);

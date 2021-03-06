@@ -10,8 +10,6 @@ export default class Visivi extends React.Component<{}, Config> {
     private static _instance: Visivi;
     private static _configManager: ConfigManager;
     private static _config: VisiviConfig;
-    // @ts-ignore
-    private static _mespeak;
     private static _eventEmitter: EventEmitter;
 
     constructor() {
@@ -20,11 +18,7 @@ export default class Visivi extends React.Component<{}, Config> {
         Visivi._instance = this;
         Visivi._configManager = new ConfigManager();
         Visivi._config = new VisiviConfig(Visivi.configManager);
-        Visivi._mespeak = require("mespeak");
         Visivi._eventEmitter = new EventEmitter();
-
-        Visivi._mespeak.loadConfig(require("mespeak/src/mespeak_config.json"));
-        Visivi._mespeak.loadVoice(require("mespeak/voices/cs.json"));
 
         this.state = Visivi.configManager.config;
     }
@@ -48,10 +42,6 @@ export default class Visivi extends React.Component<{}, Config> {
 
     static get config(): VisiviConfig {
         return this._config;
-    }
-
-    static get TTS() {
-        return Visivi._mespeak
     }
 
     static get eventEmitter() {
