@@ -5,6 +5,8 @@ import {Settings} from "./screens/settings/Settings";
 import {ThemeSettings} from "./screens/settings/ThemeSettings";
 import VisiviHistory from "../providers/VisiviHistory";
 import {FontSizeSettings} from "./screens/settings/FontSizeSettings";
+import {Categories} from "./screens/apps/Categories";
+import AppList from "./screens/apps/AppList";
 
 export default class VisiviRouter extends React.Component {
     render() {
@@ -14,6 +16,9 @@ export default class VisiviRouter extends React.Component {
             <Route path="/settings" component={Settings} />
             <Route path="/themeSettings" component={ThemeSettings} />
             <Route path="/fontSizeSettings" component={FontSizeSettings} />
+
+            <Route path="/apps/categories" component={Categories} />
+            <Route path="/app/category/:category" component={AppList} />
         </Router>
     }
 }

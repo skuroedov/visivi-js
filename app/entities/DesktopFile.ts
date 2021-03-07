@@ -1,8 +1,8 @@
 export default class DesktopFile {
-    name?: string;
+    name!: string;
     comment?: string;
     icon?: string;
-    exec?: string;
+    exec!: string;
     categories?: string[];
     noDisplay?: boolean;
 }

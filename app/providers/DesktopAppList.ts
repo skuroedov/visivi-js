@@ -33,7 +33,9 @@ export default class DesktopAppList {
             if (relevantLowerCase.includes(substr[0].toLowerCase())) {
                 const i = relevantLowerCase.indexOf(substr[0].toLowerCase());
                 if (substr[0] == "Categories") {
-                    substr[1] = substr[1].slice(0, -1);
+                    if(substr[1].endsWith(";")) {
+                        substr[1] = substr[1].slice(0, -1);
+                    }
 
                     let categories = substr[1].split(";");
                     desktopFile.categories = categories;
@@ -58,5 +60,10 @@ export default class DesktopAppList {
 
     get categories(): string[] {
         return this._categories;
+    }
+
+    static filterDisplayable(desktopFile: DesktopFile): boolean {
+        // @ts-ignore
+        return desktopFile.noDisplay != "true";
     }
 }
