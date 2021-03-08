@@ -1,4 +1,5 @@
 import Config from '../entities/Config';
+import {join} from "path";
 
 const fs = require('fs');
 const os = require('os');
@@ -27,7 +28,12 @@ export default class ConfigManager {
     private readDefaultConfig(): Config {
         let fd;
         try {
-            fd = fs.readFileSync('./resources/config');
+            if(process.env.START_HOT == "1") {
+                fd = fs.readFileSync('./resources/config');
+            } else {
+                console.log(process.resourcesPath);
+                fd = fs.readFileSync(join(process.resourcesPath, 'resources/config'));
+            }
         } catch (e) {
             console.log(e);
         }
