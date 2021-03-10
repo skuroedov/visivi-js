@@ -4,10 +4,11 @@ export default class VisiviTTS {
     private static process?: VisiviProcess;
 
     public static speak(text: string): void {
+        this.stop();
         this.process = exec(`espeak -v czech "${text}"`);
     }
 
     public static stop() {
-        this.process?.kill("SIGINT");
+        this.process?.kill("SIGINT", true);
     }
 }

@@ -30,7 +30,6 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     focus(): void {
         this.classes = this.focussedClasses;
 
-        VisiviTTS.stop();
         VisiviTTS.speak(String(this.props.children));
 
         Visivi.eventEmitter.removeAllListeners("enter");
