@@ -2,14 +2,20 @@ import React from 'react';
 import Visivi from "./Visivi";
 import VisiviComponent, {PVisiviComponent} from "./VisiviComponent";
 import VisiviHistory from "../providers/VisiviHistory";
+import VisiviTTS from "../providers/VisiviTTS";
+
+export interface PVisiviContainer extends PVisiviComponent {
+    title?: string;
+}
 
 export interface SVisiviContainer {
     focused: number,
 }
 
-export default abstract class VisiviContainer<P extends PVisiviComponent = PVisiviComponent, S extends SVisiviContainer = SVisiviContainer> extends VisiviComponent<P, S> {
+export default abstract class VisiviContainer<P extends PVisiviContainer = PVisiviContainer, S extends SVisiviContainer = SVisiviContainer> extends VisiviComponent<P, S> {
     defaultClasses = this.styles.visiviContainer;
     childCount: number;
+    title: string = "";
 
     protected constructor(props: P) {
         super(props);
@@ -21,6 +27,9 @@ export default abstract class VisiviContainer<P extends PVisiviComponent = PVisi
         addEventListener("keyup", this.keyListener);
 
         this.childCount = React.Children.count(this.props.children);
+
+        VisiviTTS.speak(this.props.title ?? this.title);
+        VisiviTTS.wait(2000);
     }
 
     keyListener(e: KeyboardEvent) {
@@ -53,6 +62,7 @@ export default abstract class VisiviContainer<P extends PVisiviComponent = PVisi
 
     render(items = this.props.children): JSX.Element {
         return <div className={this.classes}>
+            <div><h1>{this.props.title ?? this.title}</h1></div>
             {this.renderItems(this.state.focused, items)}
         </div>;
     }

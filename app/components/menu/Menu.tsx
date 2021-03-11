@@ -1,9 +1,8 @@
-import VisiviContainer from '../VisiviContainer';
+import VisiviContainer, {PVisiviContainer} from '../VisiviContainer';
 import stylesheet from './stylesheet.css';
-import {PVisiviComponent} from "../VisiviComponent";
 import React from "react";
 
-export default class Menu<P extends PVisiviComponent = PVisiviComponent> extends VisiviContainer<P> {
+export default class Menu<P extends PVisiviContainer = PVisiviContainer> extends VisiviContainer<P> {
     styles = stylesheet;
     defaultClasses = this.styles.menu;
 
