@@ -27,9 +27,6 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
         addEventListener("keyup", this.keyListener);
 
         this.childCount = React.Children.count(this.props.children);
-
-        VisiviTTS.speak(this.props.title ?? this.title);
-        VisiviTTS.wait(2000);
     }
 
     keyListener(e: KeyboardEvent) {
@@ -72,6 +69,11 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
             // @ts-ignore
             return React.cloneElement(child, {focused: (focused == index)});
         });
+    }
+
+    componentDidMount() {
+        VisiviTTS.speak(this.props.title ?? this.title, true);
+        VisiviTTS.wait(2000);
     }
 
     componentWillUnmount() {
