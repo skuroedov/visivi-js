@@ -1,13 +1,17 @@
 import Menu from "../menu/Menu";
 import BasicItem from "../menu/items/BasicItem";
 import React from "react";
-import VisiviComponent from "../VisiviComponent";
+import {PVisiviContainer} from "../VisiviContainer";
 
-export default class MainScreen extends VisiviComponent {
-    render(): JSX.Element {
-        return <Menu>
-            <BasicItem opens={"/apps/categories"}>Aplikace</BasicItem>
-            <BasicItem opens={"/settings"}>Nastavení</BasicItem>
-        </Menu>
+export default class MainScreen extends Menu {
+    title = "Visivi";
+
+    constructor(props: PVisiviContainer) {
+        super(props);
+
+        this.items = [
+            <BasicItem opens={"/apps/categories"}>Aplikace</BasicItem>,
+            <BasicItem opens={"/settings"}>Nastavení</BasicItem>,
+        ];
     }
 }

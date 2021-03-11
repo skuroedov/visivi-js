@@ -12,6 +12,8 @@ export class ThemeItem extends RadioItem {
 }
 
 export class ThemeSettings extends Menu {
+    title = "Nastavení barevného schématu";
+
     constructor(props: PVisiviComponent) {
         super(props);
         let items: ReactElement[] = [];

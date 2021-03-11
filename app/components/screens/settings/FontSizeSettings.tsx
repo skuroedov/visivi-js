@@ -14,6 +14,8 @@ class FontSizeItem extends RadioItem {
 }
 
 export class FontSizeSettings extends Menu {
+    title = "Nastavení velikosti písma";
+
     constructor(props: PVisiviComponent) {
         super(props);
         let items: ReactElement[] = [];
