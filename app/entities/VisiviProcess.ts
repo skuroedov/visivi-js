@@ -11,6 +11,7 @@ export default class VisiviProcess extends EventEmitter {
         super();
 
         this.childProcess = childProcess;
+        this.childProcess.on("close", () => this._killed = true);
     }
 
     kill(signal?: NodeJS.Signals | number, force: boolean = false): boolean {

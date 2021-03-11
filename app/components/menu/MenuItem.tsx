@@ -25,6 +25,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
         } as S;
 
         this.onEnter = this.onEnter.bind(this);
+        this.repeat = this.repeat.bind(this);
     }
 
     focus(): void {
@@ -34,6 +35,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
 
         Visivi.eventEmitter.removeAllListeners("enter");
         Visivi.eventEmitter.once("enter", this.onEnter);
+        Visivi.eventEmitter.on("KEY_R", this.repeat);
 
         this.onFocus();
     }
@@ -42,6 +44,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
         this.classes = this.defaultClasses;
 
         Visivi.eventEmitter.removeListener("enter", this.onEnter);
+        Visivi.eventEmitter.removeListener("KEY_R", this.repeat);
 
         this.onUnFocus();
     }
@@ -49,6 +52,15 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     onFocus(): void {}
     onUnFocus(): void {}
     onEnter(): void {}
+
+    repeat(): void {
+        console.log("REPEAT");
+        if(VisiviTTS.isSpeaking) {
+            VisiviTTS.stop();
+        } else {
+            VisiviTTS.speak(String(this.props.children));
+        }
+    }
 
     render(content = this.props.children): JSX.Element {
         return <div className={this.state.focused ? this.focussedClasses : this.defaultClasses} ref={this.selfRef}>{content}</div>;

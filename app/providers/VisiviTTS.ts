@@ -11,4 +11,8 @@ export default class VisiviTTS {
     public static stop() {
         this.process?.kill("SIGINT", true);
     }
+
+    public static get isSpeaking() {
+        return !this.process?.killed;
+    }
 }

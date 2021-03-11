@@ -41,6 +41,13 @@ export default abstract class VisiviContainer<P extends PVisiviComponent = PVisi
             case "Escape":
                 VisiviHistory.goBack();
                 break;
+            /**
+             * Key: R
+             * Primary function: Repeat
+             */
+            case "r":
+                Visivi.eventEmitter.emit("KEY_R");
+                break;
         }
     }
 
