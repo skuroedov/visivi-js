@@ -34,11 +34,15 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
             case "ArrowUp":
                 if(this.state.focused - 1 >= 0) {
                     this.setState({focused: this.state.focused - 1});
+                } else {
+                    VisiviTTS.speak("Upozornění: začátek");
                 }
                 break;
             case "ArrowDown":
                 if(this.state.focused + 1 < this.childCount) {
                     this.setState({focused: this.state.focused + 1});
+                } else {
+                    VisiviTTS.speak("Upozornění: konec");
                 }
                 break;
             case "Enter":
