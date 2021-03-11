@@ -17,6 +17,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     defaultClasses = this.styles.item;
     classes = this.defaultClasses;
     focussedClasses = this.defaultClasses + " " + this.styles.focused;
+    timeout?: NodeJS.Timeout;
 
     constructor(props: P) {
         super(props);
@@ -31,7 +32,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     focus(): void {
         this.classes = this.focussedClasses;
 
-        VisiviTTS.speak(String(this.props.children));
+        this.timeout = setTimeout(() => {VisiviTTS.speak(String(this.props.children))}, 250);
 
         Visivi.eventEmitter.removeAllListeners("enter");
         Visivi.eventEmitter.once("enter", this.onEnter);
@@ -43,6 +44,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     unFocus(): void {
         this.classes = this.defaultClasses;
 
+        clearTimeout(this.timeout!);
         Visivi.eventEmitter.removeListener("enter", this.onEnter);
         Visivi.eventEmitter.removeListener("KEY_R", this.repeat);
 

@@ -73,7 +73,7 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
 
     componentDidMount() {
         VisiviTTS.speak(this.props.title ?? this.title, true);
-        VisiviTTS.wait(2000);
+        VisiviTTS.wait(1500);
     }
 
     componentWillUnmount() {
