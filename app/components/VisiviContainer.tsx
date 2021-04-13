@@ -1,7 +1,6 @@
 import React from 'react';
 import Visivi from "./Visivi";
 import VisiviComponent, {PVisiviComponent} from "./VisiviComponent";
-import VisiviHistory from "../providers/VisiviHistory";
 import VisiviTTS from "../providers/VisiviTTS";
 
 export interface PVisiviContainer extends PVisiviComponent {
@@ -49,7 +48,7 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
                 Visivi.eventEmitter.emit("enter")
                 break;
             case "Escape":
-                VisiviHistory.goBack();
+                this.onEsc();
                 break;
             /**
              * Key: R
@@ -83,4 +82,6 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
     componentWillUnmount() {
         removeEventListener("keyup", this.keyListener);
     }
+
+    abstract onEsc(): void;
 }

@@ -1,6 +1,7 @@
 import VisiviContainer, {PVisiviContainer} from '../VisiviContainer';
 import stylesheet from './stylesheet.css';
 import React from "react";
+import VisiviHistory from "../../providers/VisiviHistory";
 
 export default class Menu<P extends PVisiviContainer = PVisiviContainer> extends VisiviContainer<P> {
     styles = stylesheet;
@@ -25,5 +26,9 @@ export default class Menu<P extends PVisiviContainer = PVisiviContainer> extends
 
     get items(): React.ReactNode {
         return this._items;
+    }
+
+    onEsc(): void {
+        VisiviHistory.goBack();
     }
 }
