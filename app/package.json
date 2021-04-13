@@ -1,7 +1,7 @@
 {
   "name": "visivi-js",
   "productName": "VisiviJS",
-  "version": "1.4.0",
+  "version": "1.0.0",
   "description": "Visivi is a simple interface for visually impaired",
   "main": "./main.prod.js",
   "author": {
