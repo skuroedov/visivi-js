@@ -68,6 +68,9 @@
       ],
       "category": "Development"
     },
+    "deb": {
+      "depends": ["espeak"]
+    },
     "directories": {
       "buildResources": "resources",
       "output": "release"
