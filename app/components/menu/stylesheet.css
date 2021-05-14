@@ -56,3 +56,14 @@
     border-radius: 50%;
     opacity: 0;
 }
+
+.input input {
+    background: none;
+    border: none;
+    color: currentColor;
+    font-size: inherit;
+}
+
+.input input:focus {
+    outline: none;
+}

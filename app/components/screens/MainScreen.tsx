@@ -11,6 +11,7 @@ export default class MainScreen extends Menu {
 
         this.items = [
             <BasicItem opens={"/apps/categories"}>Aplikace</BasicItem>,
+            <BasicItem opens={"/notes/list"}>Poznámky</BasicItem>,
             <BasicItem opens={"/settings"}>Nastavení</BasicItem>,
         ];
     }

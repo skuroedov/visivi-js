@@ -6,6 +6,7 @@ import VisiviTTS from "../../providers/VisiviTTS";
 
 export interface PMenuItem extends PVisiviComponent {
     focused?: boolean;
+    onenter?(): void;
 }
 
 export interface SMenuItem {
@@ -53,7 +54,9 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
 
     onFocus(): void {}
     onUnFocus(): void {}
-    onEnter(): void {}
+    onEnter(): void {
+        this.props.onenter?.();
+    }
 
     repeat(): void {
         console.log("REPEAT");
