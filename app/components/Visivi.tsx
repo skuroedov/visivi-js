@@ -5,12 +5,14 @@ import {EventEmitter} from "events";
 import VisiviRouter from "./VisiviRouter";
 import Config from "../entities/Config";
 import VisiviConfig from "../providers/VisiviConfig";
+import NotesManager from "../providers/NotesManager";
 
 export default class Visivi extends React.Component<{}, Config> {
     private static _instance: Visivi;
     private static _configManager: ConfigManager;
     private static _config: VisiviConfig;
     private static _eventEmitter: EventEmitter;
+    private static _notesManager: NotesManager;
 
     constructor() {
         super({});
@@ -19,6 +21,7 @@ export default class Visivi extends React.Component<{}, Config> {
         Visivi._configManager = new ConfigManager();
         Visivi._config = new VisiviConfig(Visivi.configManager);
         Visivi._eventEmitter = new EventEmitter();
+        Visivi._notesManager = new NotesManager();
 
         this.state = Visivi.configManager.config;
     }
@@ -46,5 +49,9 @@ export default class Visivi extends React.Component<{}, Config> {
 
     static get eventEmitter() {
         return Visivi._eventEmitter;
+    }
+
+    static get notesManager() {
+        return Visivi._notesManager;
     }
 }

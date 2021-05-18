@@ -2,6 +2,7 @@ import React from 'react';
 import Visivi from "./Visivi";
 import VisiviComponent, {PVisiviComponent} from "./VisiviComponent";
 import VisiviTTS from "../providers/VisiviTTS";
+import {MenuItem} from "./menu/MenuItem";
 
 export interface PVisiviContainer extends PVisiviComponent {
     title?: string;
@@ -15,6 +16,7 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
     defaultClasses = this.styles.visiviContainer;
     childCount: number;
     title: string = "";
+    itemRefs: React.RefObject<MenuItem>[] = [];
 
     protected constructor(props: P) {
         super(props);
@@ -45,10 +47,14 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
                 }
                 break;
             case "Enter":
-                Visivi.eventEmitter.emit("enter")
+                this.itemRefs[this.state.focused].current?.enter();
                 break;
             case "Escape":
-                this.onEsc();
+                if(this.itemRefs[this.state.focused].current?.active) {
+                    this.itemRefs[this.state.focused].current?.esc();
+                } else {
+                    this.onEsc();
+                }
                 break;
             /**
              * Key: R
@@ -69,8 +75,10 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
 
     renderItems(focused: number, items = this.props.children) {
         return React.Children.map(items, (child, index) => {
+            let ref: React.RefObject<MenuItem> = React.createRef();
+            this.itemRefs[index] = ref;
             // @ts-ignore
-            return React.cloneElement(child, {focused: (focused == index)});
+            return React.cloneElement(child, {focused: (focused == index), ref: ref});
         });
     }
 

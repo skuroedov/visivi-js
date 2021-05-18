@@ -58,7 +58,7 @@
 }
 
 .input input {
-    background: none;
+    display: block;
     border: none;
     color: currentColor;
     font-size: inherit;

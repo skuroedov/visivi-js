@@ -19,6 +19,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     classes = this.defaultClasses;
     focussedClasses = this.defaultClasses + " " + this.styles.focused;
     timeout?: NodeJS.Timeout;
+    active: boolean = false;
 
     constructor(props: P) {
         super(props);
@@ -26,7 +27,6 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
             focused: false
         } as S;
 
-        this.onEnter = this.onEnter.bind(this);
         this.repeat = this.repeat.bind(this);
     }
 
@@ -35,28 +35,36 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
 
         this.timeout = setTimeout(() => {VisiviTTS.speak(String(this.props.children))}, 250);
 
-        Visivi.eventEmitter.removeAllListeners("enter");
-        Visivi.eventEmitter.once("enter", this.onEnter);
         Visivi.eventEmitter.on("KEY_R", this.repeat);
 
-        this.onFocus();
+        this.onFocus?.();
     }
 
     unFocus(): void {
         this.classes = this.defaultClasses;
 
         clearTimeout(this.timeout!);
-        Visivi.eventEmitter.removeListener("enter", this.onEnter);
         Visivi.eventEmitter.removeListener("KEY_R", this.repeat);
 
-        this.onUnFocus();
+        this.onUnFocus?.();
     }
 
-    onFocus(): void {}
-    onUnFocus(): void {}
-    onEnter(): void {
+    onFocus?(): void;
+    onUnFocus?(): void;
+
+    enter(): void {
         this.props.onenter?.();
+        this.active = true;
+        this.onEnter?.();
     }
+
+    esc(): void {
+        this.active = false;
+        this.onEsc?.();
+    }
+
+    onEnter?(): void;
+    onEsc?(): void;
 
     repeat(): void {
         console.log("REPEAT");

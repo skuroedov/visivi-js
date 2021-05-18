@@ -1,19 +1,26 @@
-import {MenuItem} from "../MenuItem";
+import {MenuItem, PMenuItem} from "../MenuItem";
 import React from "react";
 
-export default class InputItem extends MenuItem {
-    input: React.RefObject<HTMLInputElement> = React.createRef();
+interface PInputItem extends PMenuItem {
+    value: React.RefObject<HTMLInputElement>;
+}
+
+export default class InputItem extends MenuItem<PInputItem> {
     defaultClasses = this.styles.item + " " + this.styles.input;
     focussedClasses = this.defaultClasses + " " + this.styles.focused;
 
     render(): JSX.Element {
         return super.render(<>
             <label>{this.props.children}</label>
-            <input type="text" ref={this.input} />
+            <input type="text" ref={this.props.value} />
         </>);
     }
 
-    get value(): any {
-        return this.input.current?.value;
+    onEnter() {
+        this.props.value.current?.focus();
+    }
+
+    onEsc() {
+        this.props.value.current?.blur();
     }
 }
