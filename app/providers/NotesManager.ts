@@ -36,4 +36,19 @@ export default class NotesManager {
         });
         return result;
     }
+
+    public list(): any[] {
+        this.checkDir();
+
+        let notes: any[] = [];
+        fs.readdirSync(this.dir, {withFileTypes: true}).forEach(file => {
+            if(file.name.endsWith(".json")) {
+                let obj = JSON.parse(fs.readFileSync(path.join(this.dir, file.name)).toString());
+                let note: Note = Note.fromObj(obj);
+                notes.push([file.name, note]);
+            }
+        });
+        console.log(notes);
+        return notes;
+    }
 }

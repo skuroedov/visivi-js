@@ -1,8 +1,8 @@
 export default class Note {
-    private readonly created: number;
-    private edited: number;
-    private name: string;
-    private content: string;
+    protected created: number;
+    protected edited: number;
+    protected name: string;
+    protected content: string;
 
     constructor(name: string, content: string) {
         this.name = name;
@@ -35,5 +35,15 @@ export default class Note {
 
     get getEdited(): number {
         return this.edited;
+    }
+
+    static fromObj(obj: object): Note {
+        // @ts-ignore
+        let note = new Note(obj.name, obj.content);
+        // @ts-ignore
+        note.created = obj.created;
+        // @ts-ignore
+        note.edited = obj.edited;
+        return note;
     }
 }
