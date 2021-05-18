@@ -43,12 +43,16 @@ export default class NotesManager {
         let notes: any[] = [];
         fs.readdirSync(this.dir, {withFileTypes: true}).forEach(file => {
             if(file.name.endsWith(".json")) {
-                let obj = JSON.parse(fs.readFileSync(path.join(this.dir, file.name)).toString());
-                let note: Note = Note.fromObj(obj);
-                notes.push([file.name, note]);
+                notes.push([file.name, this.getNote(file.name)]);
             }
         });
-        console.log(notes);
         return notes;
+    }
+
+    public getNote(filename: string): Note {
+        this.checkDir();
+
+        let obj = JSON.parse(fs.readFileSync(path.join(this.dir, filename)).toString());
+        return Note.fromObj(obj);
     }
 }

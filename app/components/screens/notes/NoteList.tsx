@@ -11,7 +11,7 @@ export default class NoteList extends Menu {
         super(props);
         let items = [<BasicItem opens="/notes/new">Nová poznámka</BasicItem>];
         Visivi.notesManager.list().forEach(note => {
-            items.push(<BasicItem opens={"/notes/note/"+note[0]}>{(note[1] as Note).getName}</BasicItem>);
+            items.push(<BasicItem opens={`/notes/note/${note[0]}`}>{(note[1] as Note).getName}</BasicItem>);
         });
         this.items = items;
     }
