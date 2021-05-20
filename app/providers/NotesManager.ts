@@ -16,15 +16,17 @@ export default class NotesManager {
         }
     }
 
-    public new(name: string, content: string): Note {
+    public save(filename: string, note: Note): void {
         this.checkDir();
 
+        fs.writeFileSync(this.dir + filename, JSON.stringify(note));
+    }
+
+    public new(name: string, content: string): Note {
         let note = new Note(name, content);
         let date = new Date(note.getCreated);
         const filename = "note_" + this.formatDate(date) + ".json";
-        fs.appendFile(this.dir + filename, JSON.stringify(note), err => {
-            if(err) console.log(err);
-        });
+        this.save(filename, note);
         return note;
     }
 

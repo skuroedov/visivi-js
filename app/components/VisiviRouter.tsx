@@ -10,6 +10,7 @@ import AppList from "./screens/apps/AppList";
 import NoteList from "./screens/notes/NoteList";
 import NewNote from "./screens/notes/NewNote";
 import Note from "./screens/notes/Note";
+import EditNote from "./screens/notes/EditNote";
 
 export default class VisiviRouter extends React.Component {
     render() {
@@ -23,6 +24,7 @@ export default class VisiviRouter extends React.Component {
             <Route path="/notes/list" component={NoteList} />
             <Route path="/notes/new" component={NewNote} />
             <Route path="/notes/note/:file" component={Note} />
+            <Route path="/notes/edit/:file" component={EditNote} />
 
             <Route path="/apps/categories" component={Categories} />
             <Route path="/app/category/:category" component={AppList} />
