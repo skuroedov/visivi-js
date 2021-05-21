@@ -5,6 +5,7 @@ import InputItem from "../../menu/items/InputItem";
 import {MenuItem} from "../../menu/MenuItem";
 
 export abstract class NoteEditor<P extends PVisiviContainer = PVisiviContainer> extends Menu<P> {
+    title = "Upravit poznámku";
     nameInput: React.RefObject<HTMLInputElement> = React.createRef();
     contentInput: React.RefObject<HTMLInputElement> = React.createRef();
 

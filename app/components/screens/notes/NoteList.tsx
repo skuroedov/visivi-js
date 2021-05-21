@@ -7,6 +7,8 @@ import Note from "../../../entities/Note";
 
 
 export default class NoteList extends Menu {
+    title = "Poznámky";
+
     constructor(props: PVisiviContainer) {
         super(props);
         let items = [<BasicItem opens="/notes/new">Nová poznámka</BasicItem>];

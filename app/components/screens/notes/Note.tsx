@@ -14,10 +14,10 @@ export default class Note extends Menu<PNote> {
     constructor(props: PNote) {
         super(props);
         let note = Visivi.notesManager.getNote(this.props.match.params.file);
+        this.title = note.getName;
         this.items = [
             <MenuItem>Vytvořeno {this.dateFormat(new Date(note.getCreated))}</MenuItem>,
             <MenuItem>Upraveno {this.dateFormat(new Date(note.getEdited))}</MenuItem>,
-            <MenuItem>Název {note.getName}</MenuItem>,
             <MenuItem>Obsah {note.getContent}</MenuItem>,
             <BasicItem opens={`/notes/edit/${this.props.match.params.file}`}>Upravit</BasicItem>
         ];
