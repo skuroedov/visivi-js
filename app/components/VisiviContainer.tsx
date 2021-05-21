@@ -31,45 +31,43 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
     }
 
     keyListener(e: KeyboardEvent) {
-        /*
-        if(this.itemRefs[this.state.focused].current?.active && !e.ctrlKey && !e.metaKey && !e.altKey) {
-            VisiviTTS.speak(e.key);
-        }
-
-         */
-
-        switch(e.key) {
-            case "ArrowUp":
-                if(this.state.focused - 1 >= 0) {
-                    this.setState({focused: this.state.focused - 1});
-                } else {
-                    VisiviTTS.speak("Upozornění: začátek");
-                }
-                break;
-            case "ArrowDown":
-                if(this.state.focused + 1 < this.childCount) {
-                    this.setState({focused: this.state.focused + 1});
-                } else {
-                    VisiviTTS.speak("Upozornění: konec");
-                }
-                break;
-            case "Enter":
-                this.itemRefs[this.state.focused].current?.enter();
-                break;
-            case "Escape":
-                if(this.itemRefs[this.state.focused].current?.active) {
-                    this.itemRefs[this.state.focused].current?.esc();
-                } else {
+        if(this.itemRefs[this.state.focused].current?.active) {
+            if(!e.ctrlKey && !e.metaKey && !e.altKey) {
+                VisiviTTS.speak(e.key);
+            }
+            if(e.key == "Escape") {
+                this.itemRefs[this.state.focused].current?.esc();
+            }
+        } else {
+            switch(e.key) {
+                case "ArrowUp":
+                    if(this.state.focused - 1 >= 0) {
+                        this.setState({focused: this.state.focused - 1});
+                    } else {
+                        VisiviTTS.speak("Upozornění: začátek");
+                    }
+                    break;
+                case "ArrowDown":
+                    if(this.state.focused + 1 < this.childCount) {
+                        this.setState({focused: this.state.focused + 1});
+                    } else {
+                        VisiviTTS.speak("Upozornění: konec");
+                    }
+                    break;
+                case "Enter":
+                    this.itemRefs[this.state.focused].current?.enter();
+                    break;
+                case "Escape":
                     this.onEsc();
-                }
-                break;
-            /**
-             * Key: R
-             * Primary function: Repeat
-             */
-            case "r":
-                Visivi.eventEmitter.emit("KEY_R");
-                break;
+                    break;
+                /**
+                 * Key: R
+                 * Primary function: Repeat
+                 */
+                case "r":
+                    Visivi.eventEmitter.emit("KEY_R");
+                    break;
+            }
         }
     }
 
