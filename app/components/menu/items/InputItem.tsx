@@ -22,5 +22,11 @@ export default class InputItem extends MenuItem<PInputItem> {
 
     onEsc() {
         this.props.value.current?.blur();
+        this.repeat();
+    }
+
+    protected TTSText(): string {
+        let content = this.props.value.current?.value;
+        return `Vstupní pole ${String(this.props.children)} ${(content ?? "").length > 0 ? content : "Prázdné"}`;
     }
 }

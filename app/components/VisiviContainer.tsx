@@ -31,6 +31,13 @@ export default abstract class VisiviContainer<P extends PVisiviContainer = PVisi
     }
 
     keyListener(e: KeyboardEvent) {
+        /*
+        if(this.itemRefs[this.state.focused].current?.active && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            VisiviTTS.speak(e.key);
+        }
+
+         */
+
         switch(e.key) {
             case "ArrowUp":
                 if(this.state.focused - 1 >= 0) {

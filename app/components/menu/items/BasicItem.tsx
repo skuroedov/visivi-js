@@ -2,6 +2,7 @@ import {MenuItem, PMenuItem} from '../MenuItem';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import VisiviHistory from "../../../providers/VisiviHistory";
+import Visivi from "../../Visivi";
 
 interface PBasicItem extends PMenuItem {
     opens: string;
@@ -9,6 +10,7 @@ interface PBasicItem extends PMenuItem {
 
 export default class BasicItem extends MenuItem<PBasicItem> {
     onEnter(): void {
+        Visivi.eventEmitter.removeListener("KEY_R", this.repeat);
         VisiviHistory.push(this.props.opens);
     }
 

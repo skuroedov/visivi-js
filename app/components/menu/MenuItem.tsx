@@ -33,7 +33,7 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     focus(): void {
         this.classes = this.focussedClasses;
 
-        this.timeout = setTimeout(() => {VisiviTTS.speak(String(this.props.children))}, 250);
+        this.timeout = setTimeout(() => {VisiviTTS.speak(this.TTSText())}, 250);
 
         Visivi.eventEmitter.on("KEY_R", this.repeat);
 
@@ -67,12 +67,16 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
     onEsc?(): void;
 
     repeat(): void {
-        console.log("REPEAT");
+        console.log("REPEAT: "+this.TTSText());
         if(VisiviTTS.isSpeaking) {
             VisiviTTS.stop();
         } else {
-            VisiviTTS.speak(String(this.props.children));
+            VisiviTTS.speak(this.TTSText());
         }
+    }
+
+    protected TTSText(): string {
+        return String(this.props.children);
     }
 
     render(content = this.props.children): JSX.Element {
@@ -90,5 +94,9 @@ export abstract class MenuItem<P extends PMenuItem = PMenuItem, S extends SMenuI
         if(prevProps.focused != this.props.focused) {
             this.setState({focused: this.props.focused});
         }
+    }
+
+    componentWillUnmount() {
+        Visivi.eventEmitter.removeListener("KEY_R", this.repeat);
     }
 }
