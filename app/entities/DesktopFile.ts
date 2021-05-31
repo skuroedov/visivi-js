@@ -14,7 +14,7 @@ export function startApp(script: string, callback: () => void) {
     let orca = exec("orca");
 
     process.childProcess.on("exit", () => {
-        orca.childProcess.emit("exit");
+        orca.kill("SIGINT", true);
         callback();
     });
 }

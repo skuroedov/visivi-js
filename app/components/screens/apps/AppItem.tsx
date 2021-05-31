@@ -7,7 +7,7 @@ interface PAppItem extends PMenuItem {
 
 export class AppItem extends MenuItem<PAppItem> {
     onEnter() {
-        super.onEnter();
+        super.onEnter?.();
         startApp(this.props.exec, () => this.focus());
     }
 }
